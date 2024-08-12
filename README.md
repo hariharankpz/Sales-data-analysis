@@ -152,15 +152,15 @@ This step involves creating a mock data generator that will create schema and in
 - Create an IAM role with full access to DynamoDB, Kinesis, and EventBridge.
 - Attach the necessary policies to allow the EventBridge Pipe to access Kinesis and DynamoDB.
 
-## Step 7: Kinesis Firehose Setup
+# Step 7: Kinesis Firehose Setup
 
-# 1. Create a Kinesis Firehose Delivery Stream
+## 1. Create a Kinesis Firehose Delivery Stream
 
 Create a Kinesis Firehose delivery stream to batch and deliver data from the Kinesis Data Stream to an S3 bucket.
 
 ![Kinesis Firehose Setup](https://github.com/user-attachments/assets/373a5d4f-139e-4ea9-8525-71cf18993dc1)
 
-# 2. Add a Transformation Lambda Function
+## 2. Add a Transformation Lambda Function
 
 Add a transformation Lambda function to clean up the data before storing it in S3. The data coming from the source may contain unnecessary metadata fields that need to be removed or modified.
 
@@ -174,7 +174,7 @@ Add a transformation Lambda function to clean up the data before storing it in S
 
 ![Lambda Function Selection](https://github.com/user-attachments/assets/12fb5ec1-9571-40ed-976d-3b94287ee09c)
 
-# 3. Configure Buffer Size and Buffer Interval for Near Real-Time Processing
+## 3. Configure Buffer Size and Buffer Interval for Near Real-Time Processing
 
 When using AWS Lambda to transform your data in Amazon Kinesis Data Firehose before delivering it to the destination, you can configure two important settings: **Buffer Size** and **Buffer Interval**. These settings control how Kinesis Data Firehose batches the incoming data before sending it to your Lambda function for processing.
 
@@ -206,7 +206,7 @@ Kinesis Data Firehose will invoke your Lambda function as soon as 3 MB of data i
 
 ![Buffer Configuration](https://github.com/user-attachments/assets/d419e9d8-f4e5-46a3-be58-a3d1ebf537d3)
 
-# 4. Add S3 Bucket for Data Storage
+## 4. Add S3 Bucket for Data Storage
 
 Finally, configure the S3 bucket where the transformed data from Kinesis Firehose will be stored. Enable Dynamic Partitioning to store data in a Hive-like partitioned structure.
 
