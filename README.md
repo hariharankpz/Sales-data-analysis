@@ -98,11 +98,11 @@ This project demonstrates the implementation of a real-time data pipeline using 
 - IAM User with necessary permissions
 - AWS CLI configured
 
-## Step 1: Mock Data Generator for Input
+# Step 1: Mock Data Generator for Input
 
 This step involves creating a mock data generator that will create schema and input records. The generated data will be inserted into a DynamoDB table. The data is inserting into dynamoDB via python file (mock_data_generator_for_dynamodb.py)
 
-## Step 2: DynamoDB Table Creation
+# Step 2: DynamoDB Table Creation
 
 1. Create a DynamoDB table named `OrdersRawTable`.
 2. Define `orderid` as the partition key.
@@ -113,7 +113,7 @@ This step involves creating a mock data generator that will create schema and in
 
    
 
-## Step 3: Enable DynamoDB Streams
+# Step 3: Enable DynamoDB Streams
 
 - Enable DynamoDB Streams on the `OrdersRawTable`.
 - Select `New image` and turn on the stream.
@@ -130,13 +130,13 @@ This step involves creating a mock data generator that will create schema and in
   Using DynamoDB Streams with EventBridge before routing data to Kinesis Streams offers the flexibility to apply filtering and enrichment on the CDC changes. This approach allows you to handle specific event conditions, transforming or   filtering data as needed before it reaches the Kinesis Stream. It ensures that only relevant data is sent for further processing(in our case only new images) , which can optimize downstream processing and reduce unnecessary data load 
   on the Kinesis Stream. This     method also aligns with the design patterns you've applied in other assignments, making it a consistent approach in your architecture.
 
-## Step 4: Create a Kinesis Data Stream
+# Step 4: Create a Kinesis Data Stream
 
 - Create a Kinesis Data Stream with default settings.
   ![image](https://github.com/user-attachments/assets/f10a4877-b341-4b61-b8d4-0a3236671d4c)
 
 
-## Step 5: Create an EventBridge Pipe
+# Step 5: Create an EventBridge Pipe
 
 1. Create an EventBridge Pipe that reads data from DynamoDB Streams and sends it to Kinesis.
 2. Add `OrdersRawTable` as the source and the Kinesis Data Stream as the target.
@@ -147,7 +147,7 @@ This step involves creating a mock data generator that will create schema and in
 
 
 
-## Step 6: IAM Role Configuration
+# Step 6: IAM Role Configuration
 
 - Create an IAM role with full access to DynamoDB, Kinesis, and EventBridge.
 - Attach the necessary policies to allow the EventBridge Pipe to access Kinesis and DynamoDB.
@@ -170,7 +170,7 @@ Add a transformation Lambda function to clean up the data before storing it in S
 
 ![Lambda Transformation Setup](https://github.com/user-attachments/assets/537d9bee-4c79-470b-8d16-aa04e11712d7)
 
-- Select the option below and define a Lambda function (Transformer Lambda function - `transformation_layer_with_lambda.py`).
+- Select the option below and choose the Lambda function (Transformer Lambda function - `transformation_layer_with_lambda.py`).
 
 ![Lambda Function Selection](https://github.com/user-attachments/assets/12fb5ec1-9571-40ed-976d-3b94287ee09c)
 
@@ -215,7 +215,7 @@ Finally, configure the S3 bucket where the transformed data from Kinesis Firehos
 
 
 
-## Step 8: Setup Athena for Querying S3 Data
+# Step 8: Setup Athena for Querying S3 Data
 
 1. Create a Glue Crawler to catalog the data stored in S3.
 2. Set up a custom classifier to properly parse the JSON data.
