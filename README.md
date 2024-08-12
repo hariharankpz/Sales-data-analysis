@@ -285,7 +285,7 @@ Athena queries data by referring to table definitions stored in the Glue Data Ca
      Select the glue catalog table that gets created in the previous step to run the athena queries as below.
       ![image](https://github.com/user-attachments/assets/19319806-b63b-44a3-83ac-cc16bf338fb1)
 
-# Step 10: Invoke CDC change manually and test the pipeline
+# Step 10: Invoke CDC manually from dynamoDb table and test the pipeline
 
    Manually updating the phone to iphone for orderid 6118 in DynamoDB.
      ![image](https://github.com/user-attachments/assets/0c8fd220-017a-45bb-bb7d-7a5d4d204dbc)
