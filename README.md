@@ -77,7 +77,7 @@ Develop a real-time sales data analysis system to:
 
 ---
 
-# Keeo in mind:
+# Keep in mind:
 ### What Happens When You Update Two Rows and Insert One New Row in DynamoDB
 
 With DynamoDB Streams configured to capture the entire item as it appears after the change (using the `NEW_IMAGE` stream view type), the following will occur:
