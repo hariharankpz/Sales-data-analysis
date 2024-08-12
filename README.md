@@ -155,8 +155,39 @@ This step involves creating a mock data generator that will create schema and in
 ## Step 7: Kinesis Firehose Setup
 
 1. Create a Kinesis Firehose to batch and deliver data from the Kinesis Data Stream to an S3 bucket.
+   ![image](https://github.com/user-attachments/assets/373a5d4f-139e-4ea9-8525-71cf18993dc1)
+
 2. Add a transformation Lambda function to clean up the data before storing it in S3.
+   From the source , whatever the data we are consuming,we want to transform that. Because the data coming from source would have unnecessary metadata fields also. 
+   Create Lambda function that runs in python runtime. Refer the python file transformation_layer_with_lambda.py for script.
+   Make sure to provide neccessary access to lambda (Kinesis firehose access).
+  
+   ![image](https://github.com/user-attachments/assets/537d9bee-4c79-470b-8d16-aa04e11712d7)
+   
+   select the option below and define a lambda function (Transformer lambda function - transformation_layer_with_lambda.py).
+   ![image](https://github.com/user-attachments/assets/12fb5ec1-9571-40ed-976d-3b94287ee09c)
+
+   
+
 3. Configure buffer size and buffer interval for near real-time processing.
+   In Amazon Kinesis Data Firehose, when you use an AWS Lambda function to transform your data before it's delivered to the destination, you can configure two important settings: buffer size and buffer interval. These settings control      how Kinesis Data Firehose batches the incoming data before sending it to your Lambda function for processing.
+   
+   Buffer Size
+      The buffer size parameter specifies the amount of data, in MBs, that Kinesis Data Firehose buffers before invoking your Lambda function. This means that once the buffer accumulates the specified amount of data, Kinesis Data             Firehose triggers your Lambda function to process the buffered data.
+      Minimum value: 1 MB
+      Maximum value: 3 MB
+   
+   Buffer Interval
+      The buffer interval parameter specifies the maximum amount of time, in seconds, that Kinesis Data Firehose buffers incoming data before invoking your Lambda function. If the buffer size is not reached within this interval, 
+      Kinesis Data Firehose triggers your Lambda function based on the time interval.
+      Minimum value: 60 seconds (1 minute)
+      Maximum value: 900 seconds (15 minutes)
+   
+   How They Work Together
+      Kinesis Data Firehose will invoke your Lambda function to process buffered data when either the buffer size or the buffer interval condition is met, whichever comes first. This ensures that your data is processed in a timely            manner without being delayed indefinitely.
+   For example:
+   If you set the buffer size to 3 MB and the buffer interval to 300 seconds (5 minutes), Kinesis Data Firehose will invoke your Lambda function as soon as 3 MB of data is buffered or 5 minutes have passed since the last invocation,       whichever happens first.
+
 
 ## Step 8: Setup Athena for Querying S3 Data
 
