@@ -119,11 +119,10 @@ This step involves creating a mock data generator that will create schema and in
 - Select `New image` and turn on the stream.
 - This will capture any changes (inserts, updates, deletes) to items in the table.
 
-  ![image](https://github.com/user-attachments/assets/10cd45e0-cbfb-4f4d-a2cb-36a8d6449c97)
+   ![image](https://github.com/user-attachments/assets/10cd45e0-cbfb-4f4d-a2cb-36a8d6449c97)
 
 
-  
- ![image](https://github.com/user-attachments/assets/df1362e1-e00c-4528-8427-d56c1ea414b6)
+   ![image](https://github.com/user-attachments/assets/df1362e1-e00c-4528-8427-d56c1ea414b6)
 
 
  
