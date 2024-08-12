@@ -109,6 +109,8 @@ This step involves creating a mock data generator that will create schema and in
 3. Keep the settings as default.
 4. Add a tag: `dev`.
 5. Create the table.
+   ![image](https://github.com/user-attachments/assets/b09827ff-8d27-4439-9b0f-b0dab9e327b0)
+
    
 
 ## Step 3: Enable DynamoDB Streams
@@ -117,10 +119,12 @@ This step involves creating a mock data generator that will create schema and in
 - Select `New image` and turn on the stream.
 - This will capture any changes (inserts, updates, deletes) to items in the table.
 
-  ![image](https://github.com/user-attachments/assets/c21aa8e5-12f5-4463-9a31-67a620111df1)
+  ![image](https://github.com/user-attachments/assets/10cd45e0-cbfb-4f4d-a2cb-36a8d6449c97)
+
 
   
-  ![image](https://github.com/user-attachments/assets/e78b90df-bb02-4a7e-84cf-d0246ca9b9e6)
+ ![image](https://github.com/user-attachments/assets/df1362e1-e00c-4528-8427-d56c1ea414b6)
+
 
  
 
@@ -130,6 +134,8 @@ This step involves creating a mock data generator that will create schema and in
 ## Step 4: Create a Kinesis Data Stream
 
 - Create a Kinesis Data Stream with default settings.
+  ![image](https://github.com/user-attachments/assets/e054deed-fcfb-4a70-a48c-ef5723f5f937)
+
 
 ## Step 5: Create an EventBridge Pipe
 
