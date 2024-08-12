@@ -6,7 +6,7 @@ This project aims to develop a real-time sales data analysis system to monitor a
 
 ## Architecture Diagram
 
-![Uploading image.png…]()
+![image](https://github.com/user-attachments/assets/984bd48d-cd79-466a-a838-4b2dccd0511a)
 
 
 ## Tech Stack
@@ -99,7 +99,7 @@ This project demonstrates the implementation of a real-time data pipeline using 
 
 ## Step 1: Mock Data Generator for Input
 
-This step involves creating a mock data generator that will create schema and input records. The generated data will be inserted into a DynamoDB table.
+This step involves creating a mock data generator that will create schema and input records. The generated data will be inserted into a DynamoDB table. The data is inserting into dynamoDB via python file (mock_data_generator_for_dynamodb.py)
 
 ## Step 2: DynamoDB Table Creation
 
@@ -108,12 +108,19 @@ This step involves creating a mock data generator that will create schema and in
 3. Keep the settings as default.
 4. Add a tag: `dev`.
 5. Create the table.
+   
 
 ## Step 3: Enable DynamoDB Streams
 
 - Enable DynamoDB Streams on the `OrdersRawTable`.
 - Select `New image` and turn on the stream.
 - This will capture any changes (inserts, updates, deletes) to items in the table.
+  
+  ![image](https://github.com/user-attachments/assets/e78b90df-bb02-4a7e-84cf-d0246ca9b9e6)
+
+  ![Uploading image.png…]()
+
+  Using DynamoDB Streams with EventBridge before routing data to Kinesis Streams offers the flexibility to apply filtering and enrichment on the CDC changes. This approach allows you to handle specific event conditions, transforming or   filtering data as needed before it reaches the Kinesis Stream. It ensures that only relevant data is sent for further processing(in our case only new images) , which can optimize downstream processing and reduce unnecessary data load on the Kinesis Stream. This     method also aligns with the design patterns you've applied in other assignments, making it a consistent approach in your architecture.
 
 ## Step 4: Create a Kinesis Data Stream
 
