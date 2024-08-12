@@ -267,20 +267,38 @@ In AWS Athena, data stored in S3 needs to be cataloged and crawled to allow Athe
 Athena queries data by referring to table definitions stored in the Glue Data Catalog. Without a catalog, Athena wouldn’t know the structure of your data, making querying impossible and the crawler helps to automate the process of creating table definitions in the Data Catalog. Instead of manually defining the schema, the crawler identifies and creates this metadata, ensuring that Athena has the necessary information to run SQL queries on the data.
 
 1. Create a Glue Data database and Glue Crawler to catalog the data stored in S3. Make sure to select the s3 output path of firehose for crawler.
-   ![image](https://github.com/user-attachments/assets/c1acd2cb-fef4-420e-91ec-6a5b6060a022)
+      ![image](https://github.com/user-attachments/assets/c1acd2cb-fef4-420e-91ec-6a5b6060a022)
    
    
-3. Set up a custom classifier to properly parse the JSON data and add this custom classifier to the above configured crawler.
-   ![image](https://github.com/user-attachments/assets/f7b3f0b7-15c9-4cef-8e26-897344a3b29a)
+2. Set up a custom classifier to properly parse the JSON data and add this custom classifier to the above configured crawler.
+      ![image](https://github.com/user-attachments/assets/f7b3f0b7-15c9-4cef-8e26-897344a3b29a)
 
-   ![image](https://github.com/user-attachments/assets/f26b8be6-0fd6-40c3-a217-3648d997d7c2)
+      ![image](https://github.com/user-attachments/assets/f26b8be6-0fd6-40c3-a217-3648d997d7c2)
 
+
+3. Now trigger the crawler and this will create an new glue catalog table under the glue database that we created in step 1.
+      ![image](https://github.com/user-attachments/assets/8b61d914-45e7-430e-92b9-357ee247e506)
+
+   
    
 5. Use Athena to query the data and gain insights.
-   ![image](https://github.com/user-attachments/assets/19319806-b63b-44a3-83ac-cc16bf338fb1)
+     Select the glue catalog table that gets created in the previous step to run the athena queries as below.
+      ![image](https://github.com/user-attachments/assets/19319806-b63b-44a3-83ac-cc16bf338fb1)
+
+# Step 10: Invoke CDC change manually and test the pipeline
+
+   Manually updating the phone to iphone for orderid 6118 in DynamoDB.
+     ![image](https://github.com/user-attachments/assets/0c8fd220-017a-45bb-bb7d-7a5d4d204dbc)
+
+   Now the entire process triggered by EventBridge should have executed.
+
+   Upon querying Athena, you observed two rows for orderid 6118: one with phone and another with iphone.   
+   ![image](https://github.com/user-attachments/assets/40d487e7-b783-45c4-b3e5-97a9d40a5e4e)
+   ![image](https://github.com/user-attachments/assets/80f50065-8914-45f1-ad09-0362a04a585f)
+   Now we could see two rows for the orderid 6118, one with phone and another with iphone as expected
 
 
-   
+
 
 
 
