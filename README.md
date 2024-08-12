@@ -116,12 +116,16 @@ This step involves creating a mock data generator that will create schema and in
 - Enable DynamoDB Streams on the `OrdersRawTable`.
 - Select `New image` and turn on the stream.
 - This will capture any changes (inserts, updates, deletes) to items in the table.
+
+  ![image](https://github.com/user-attachments/assets/c21aa8e5-12f5-4463-9a31-67a620111df1)
+
   
   ![image](https://github.com/user-attachments/assets/e78b90df-bb02-4a7e-84cf-d0246ca9b9e6)
 
-  ![Uploading image.png…]()
+ 
 
-  Using DynamoDB Streams with EventBridge before routing data to Kinesis Streams offers the flexibility to apply filtering and enrichment on the CDC changes. This approach allows you to handle specific event conditions, transforming or   filtering data as needed before it reaches the Kinesis Stream. It ensures that only relevant data is sent for further processing(in our case only new images) , which can optimize downstream processing and reduce unnecessary data load on the Kinesis Stream. This     method also aligns with the design patterns you've applied in other assignments, making it a consistent approach in your architecture.
+  Using DynamoDB Streams with EventBridge before routing data to Kinesis Streams offers the flexibility to apply filtering and enrichment on the CDC changes. This approach allows you to handle specific event conditions, transforming or   filtering data as needed before it reaches the Kinesis Stream. It ensures that only relevant data is sent for further processing(in our case only new images) , which can optimize downstream processing and reduce unnecessary data load 
+  on the Kinesis Stream. This     method also aligns with the design patterns you've applied in other assignments, making it a consistent approach in your architecture.
 
 ## Step 4: Create a Kinesis Data Stream
 
