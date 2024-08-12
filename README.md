@@ -90,7 +90,8 @@ This project demonstrates the implementation of a real-time data pipeline using 
 - [Step 5: Create an EventBridge Pipe](#step-5-create-an-eventbridge-pipe)
 - [Step 6: IAM Role Configuration](#step-6-iam-role-configuration)
 - [Step 7: Kinesis Firehose Setup](#step-7-kinesis-firehose-setup)
-- [Step 8: Setup Athena for Querying S3 Data](#step-8-setup-athena-for-querying-s3-data)
+- [Step 8: Trigger the Mock Data Generator from Google Colab to Test Functionality](#step-8-Trigger the Mock Data Generator from Google Colab to Test Functionality)
+- [Step 9: Setup Athena for Querying S3 Data](#step-9-setup-athena-for-querying-s3-data)
 
 ## Prerequisites
 
