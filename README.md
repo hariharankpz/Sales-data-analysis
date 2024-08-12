@@ -224,11 +224,13 @@ Athena queries data by referring to table definitions stored in the Glue Data Ca
    ![image](https://github.com/user-attachments/assets/c1acd2cb-fef4-420e-91ec-6a5b6060a022)
    
    
-3. Set up a custom classifier to properly parse the JSON data.
+3. Set up a custom classifier to properly parse the JSON data and add this custom classifier to the above configured crawler.
+   ![image](https://github.com/user-attachments/assets/f7b3f0b7-15c9-4cef-8e26-897344a3b29a)
+
    ![image](https://github.com/user-attachments/assets/f26b8be6-0fd6-40c3-a217-3648d997d7c2)
 
    
-4. Use Athena to query the data and gain insights.
+5. Use Athena to query the data and gain insights.
 
 ## Notes
 
