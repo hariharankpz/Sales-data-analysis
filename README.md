@@ -213,27 +213,52 @@ Finally, configure the S3 bucket where the transformed data from Kinesis Firehos
 ![S3 Setup](https://github.com/user-attachments/assets/0684acc7-8852-4d58-b051-e2426ec161ec)
 
 
-# Step 8: Now trigger the mock data generator from google collab and to test the functinality.
-   ##What is expected here till now?
-      Whenever there is a CDC happening in DynamoDB (inserts here), this CDC will get captured in DynamoDB Streams, and the EventBridge pipe will get trigger auntomtically and pass the records to Kinesis Streams.
-      **CDC Events:**
-      - Inserts, updates, and deletes are all considered as separate events.
-      - In this dynamoDb table, if we insert 5 items and update 5 items, all these changes will be tagged and flushed into the DynamoDB stream (10 records total flushed to DynamoDB stream). From here, it can be captured and processed elsewhere.
+# Step 8: Trigger the Mock Data Generator from Google Colab to Test Functionality
 
-   ##Running the mock data generator.
-      ![DynamoDB Records](https://github.com/user-attachments/assets/c0081bf6-2443-4a2c-bb63-e2df085d4f9e)
-      ![DynamoDB Records Inserted](https://github.com/user-attachments/assets/27182a8a-f804-4b85-9a3c-1f64f7e0a641)
-   
-   ##Now records got inserted in DynamoDB:
-      ![DynamoDB Records Inserted](https://github.com/user-attachments/assets/ca64b6f2-86ae-463c-9882-b45f06a17392)
-   
-   This will capture item-level changes in the table and push the changes to the DynamoDB stream. You can access the change information through the DynamoDB Streams API.
+## What is Expected Here So Far?
 
-   ##Data landed in Kinesis Shard 0:
-      ![Kinesis Shard 0](https://github.com/user-attachments/assets/865c6abc-ccbc-43f1-a6a3-e6c5ac01361e)
-   
-   ##Now Kinesis Firehose comes into play:
-   - The role of Kinesis Firehose is to batch the data landing in your Kinesis Stream and then dump it into the target. Here we use S3 as the target. Firehose will wait for 1MB of data to arrive or 60 seconds from the previous run and       then execute, thereby achieving batch processing.
+Whenever there is a Change Data Capture (CDC) event in DynamoDB (e.g., inserts), this CDC will be captured in DynamoDB Streams. The EventBridge pipe will then automatically trigger and pass the records to Kinesis Streams.
+
+**CDC Events:**
+- Inserts, updates, and deletes are all considered as separate events.
+- For example, if you insert 5 items and update 5 items in the DynamoDB table, all these changes will be tagged and flushed into the DynamoDB stream (10 records total). These records can then be captured and processed elsewhere.
+
+## Running the Mock Data Generator
+
+![DynamoDB Records](https://github.com/user-attachments/assets/c0081bf6-2443-4a2c-bb63-e2df085d4f9e)
+![DynamoDB Records Inserted](https://github.com/user-attachments/assets/27182a8a-f804-4b85-9a3c-1f64f7e0a641)
+
+## Now Records Got Inserted in DynamoDB
+
+![DynamoDB Records Inserted](https://github.com/user-attachments/assets/ca64b6f2-86ae-463c-9882-b45f06a17392)
+
+This setup captures item-level changes in the table and pushes these changes to the DynamoDB stream. You can access the change information through the DynamoDB Streams API.
+
+## Data Landed in Kinesis Shard 0
+
+![Kinesis Shard 0](https://github.com/user-attachments/assets/865c6abc-ccbc-43f1-a6a3-e6c5ac01361e)
+
+## Now Kinesis Firehose Comes into Play
+
+The role of Kinesis Firehose is to batch the data landing in your Kinesis Stream and then dump it into the target, which in this case is S3. Firehose will wait for either 1MB of data to arrive or 60 seconds from the previous run and then execute, thereby achieving batch processing.
+
+### What Happens When You Update Two Rows and Insert One New Row in DynamoDB
+
+With DynamoDB Streams configured to capture the entire item as it appears after the change (using the `NEW_IMAGE` stream view type), the following will occur:
+
+- **Insert New Row:**
+  - A new entry will be added to DynamoDB Streams.
+  - The stream record will contain the entire item as it was inserted, including all its attributes.
+
+- **Update Rows:**
+  - For each update, a new entry will be added to DynamoDB Streams.
+  - The stream record will contain the entire item as it appears after the update, reflecting the changes made. If an attribute is modified, the stream record will show the new value. If an attribute is deleted, it won't appear in the `NEW_IMAGE`.
+
+Each operation (insert or update) creates a separate stream record. In this scenario, three records will be added to the stream:
+- One for the new row insertion.
+- Two for the updated rows.
+
+These records can then be processed by any consumers of the stream (e.g., Lambda, Kinesis) to handle the changes accordingly.
 
 # Step 9: Setup Athena for Querying S3 Data
 
