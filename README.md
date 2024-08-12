@@ -217,9 +217,18 @@ Finally, configure the S3 bucket where the transformed data from Kinesis Firehos
 
 # Step 8: Setup Athena for Querying S3 Data
 
-1. Create a Glue Crawler to catalog the data stored in S3.
-2. Set up a custom classifier to properly parse the JSON data.
-3. Use Athena to query the data and gain insights.
+In AWS Athena, data stored in S3 needs to be cataloged and crawled to allow Athena to query it effectively. Here's why:
+Athena queries data by referring to table definitions stored in the Glue Data Catalog. Without a catalog, Athena wouldn’t know the structure of your data, making querying impossible and the crawler helps to automate the process of creating table definitions in the Data Catalog. Instead of manually defining the schema, the crawler identifies and creates this metadata, ensuring that Athena has the necessary information to run SQL queries on the data.
+
+1. Create a Glue Data database and Glue Crawler to catalog the data stored in S3. Make sure to select the s3 output path of firehose for crawler.
+   ![image](https://github.com/user-attachments/assets/c1acd2cb-fef4-420e-91ec-6a5b6060a022)
+   
+   
+3. Set up a custom classifier to properly parse the JSON data.
+   ![image](https://github.com/user-attachments/assets/f26b8be6-0fd6-40c3-a217-3648d997d7c2)
+
+   
+4. Use Athena to query the data and gain insights.
 
 ## Notes
 
