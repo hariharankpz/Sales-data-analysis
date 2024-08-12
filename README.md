@@ -213,21 +213,26 @@ Finally, configure the S3 bucket where the transformed data from Kinesis Firehos
 ![S3 Setup](https://github.com/user-attachments/assets/0684acc7-8852-4d58-b051-e2426ec161ec)
 
 
-# Step 8: Now trigger the mock data generator from google collab and test the entire pipeline functinality.
-   ![DynamoDB Records](https://github.com/user-attachments/assets/c0081bf6-2443-4a2c-bb63-e2df085d4f9e)
-   ![DynamoDB Records Inserted](https://github.com/user-attachments/assets/27182a8a-f804-4b85-9a3c-1f64f7e0a641)
+# Step 8: Now trigger the mock data generator from google collab and to test the functinality.
+   ##What is expected here till now?
+      Whenever there is a CDC happening in DynamoDB (inserts here), this CDC will get captured in DynamoDB Streams, and the EventBridge pipe will get trigger auntomtically and pass the records to Kinesis Streams.
+      **CDC Events:**
+      - Inserts, updates, and deletes are all considered as separate events.
+      - In this dynamoDb table, if we insert 5 items and update 5 items, all these changes will be tagged and flushed into the DynamoDB stream (10 records total flushed to DynamoDB stream). From here, it can be captured and processed elsewhere.
+
+   ##Running the mock data generator.
+      ![DynamoDB Records](https://github.com/user-attachments/assets/c0081bf6-2443-4a2c-bb63-e2df085d4f9e)
+      ![DynamoDB Records Inserted](https://github.com/user-attachments/assets/27182a8a-f804-4b85-9a3c-1f64f7e0a641)
    
-   Now records got inserted in DynamoDB:
+   ##Now records got inserted in DynamoDB:
+      ![DynamoDB Records Inserted](https://github.com/user-attachments/assets/ca64b6f2-86ae-463c-9882-b45f06a17392)
    
-   ![DynamoDB Records Inserted](https://github.com/user-attachments/assets/ca64b6f2-86ae-463c-9882-b45f06a17392)
+   This will capture item-level changes in the table and push the changes to the DynamoDB stream. You can access the change information through the DynamoDB Streams API.
+
+   ##Data landed in Kinesis Shard 0:
+      ![Kinesis Shard 0](https://github.com/user-attachments/assets/865c6abc-ccbc-43f1-a6a3-e6c5ac01361e)
    
-   Whenever there is a CDC happening in DynamoDB (insert here), this CDC will get captured in DynamoDB Streams, and the EventBridge pipe will trigger and pass the records to Kinesis Streams.
-   
-   Data landed in Kinesis Shard 0:
-   
-   ![Kinesis Shard 0](https://github.com/user-attachments/assets/865c6abc-ccbc-43f1-a6a3-e6c5ac01361e)
-   
-   Now Kinesis Firehose comes into play:
+   ##Now Kinesis Firehose comes into play:
    - The role of Kinesis Firehose is to batch the data landing in your Kinesis Stream and then dump it into the target. Here we use S3 as the target. Firehose will wait for 1MB of data to arrive or 60 seconds from the previous run and       then execute, thereby achieving batch processing.
 
 # Step 9: Setup Athena for Querying S3 Data
