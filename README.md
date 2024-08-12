@@ -164,7 +164,7 @@ This step involves creating a mock data generator that will create schema and in
   
    ![image](https://github.com/user-attachments/assets/537d9bee-4c79-470b-8d16-aa04e11712d7)
    
-   select the option below and define a lambda function (Transformer lambda function - transformation_layer_with_lambda.py).
+   Select the option below and define a lambda function (Transformer lambda function - transformation_layer_with_lambda.py).
    ![image](https://github.com/user-attachments/assets/12fb5ec1-9571-40ed-976d-3b94287ee09c)
 
    
@@ -199,6 +199,12 @@ If you set:
 - **Buffer Interval:** 300 seconds (5 minutes)
 
 Kinesis Data Firehose will invoke your Lambda function as soon as 3 MB of data is buffered or 5 minutes have passed since the last invocation, whichever happens first.
+![image](https://github.com/user-attachments/assets/d419e9d8-f4e5-46a3-be58-a3d1ebf537d3)
+
+4. Finally add S3 bucket for writing the transfomerd data from firehose and choose to store data in hive like partition style by enabling Dynamic partitioning.
+   ![image](https://github.com/user-attachments/assets/0684acc7-8852-4d58-b051-e2426ec161ec)
+
+
 
 
 ## Step 8: Setup Athena for Querying S3 Data
