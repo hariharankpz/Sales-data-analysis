@@ -6,7 +6,8 @@ This project aims to develop a real-time sales data analysis system to monitor a
 
 ## Architecture Diagram
 
-![image](https://github.com/user-attachments/assets/984bd48d-cd79-466a-a838-4b2dccd0511a)
+![image](https://github.com/user-attachments/assets/c432c7a6-dd35-4dd9-bc3c-ce776c573d84)
+
 
 
 ## Tech Stack
