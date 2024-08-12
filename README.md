@@ -154,55 +154,63 @@ This step involves creating a mock data generator that will create schema and in
 
 ## Step 7: Kinesis Firehose Setup
 
-1. Create a Kinesis Firehose to batch and deliver data from the Kinesis Data Stream to an S3 bucket.
-   ![image](https://github.com/user-attachments/assets/373a5d4f-139e-4ea9-8525-71cf18993dc1)
+# 1. Create a Kinesis Firehose Delivery Stream
 
-2. Add a transformation Lambda function to clean up the data before storing it in S3.
-   From the source , whatever the data we are consuming,we want to transform that. Because the data coming from source would have unnecessary metadata fields also. 
-   Create Lambda function that runs in python runtime. Refer the python file transformation_layer_with_lambda.py for script.
-   Make sure to provide neccessary access to lambda (Kinesis firehose access).
-  
-   ![image](https://github.com/user-attachments/assets/537d9bee-4c79-470b-8d16-aa04e11712d7)
-   
-   Select the option below and define a lambda function (Transformer lambda function - transformation_layer_with_lambda.py).
-   ![image](https://github.com/user-attachments/assets/12fb5ec1-9571-40ed-976d-3b94287ee09c)
+Create a Kinesis Firehose delivery stream to batch and deliver data from the Kinesis Data Stream to an S3 bucket.
 
-   
+![Kinesis Firehose Setup](https://github.com/user-attachments/assets/373a5d4f-139e-4ea9-8525-71cf18993dc1)
 
-3.Configuring Buffer Size and Buffer Interval for Near Real-Time Processing in Amazon Kinesis Data Firehose
+# 2. Add a Transformation Lambda Function
 
+Add a transformation Lambda function to clean up the data before storing it in S3. The data coming from the source may contain unnecessary metadata fields that need to be removed or modified.
+
+- Create a Lambda function that runs in the Python runtime.
+- Refer to the script in `transformation_layer_with_lambda.py` for the Lambda function code.
+- Ensure that the Lambda function has the necessary permissions to access Kinesis Firehose.
+
+![Lambda Transformation Setup](https://github.com/user-attachments/assets/537d9bee-4c79-470b-8d16-aa04e11712d7)
+
+- Select the option below and define a Lambda function (Transformer Lambda function - `transformation_layer_with_lambda.py`).
+
+![Lambda Function Selection](https://github.com/user-attachments/assets/12fb5ec1-9571-40ed-976d-3b94287ee09c)
+
+# 3. Configure Buffer Size and Buffer Interval for Near Real-Time Processing
 
 When using AWS Lambda to transform your data in Amazon Kinesis Data Firehose before delivering it to the destination, you can configure two important settings: **Buffer Size** and **Buffer Interval**. These settings control how Kinesis Data Firehose batches the incoming data before sending it to your Lambda function for processing.
 
-## Buffer Size
+### Buffer Size
 
 The buffer size parameter specifies the amount of data, in MBs, that Kinesis Data Firehose buffers before invoking your Lambda function. This means that once the buffer accumulates the specified amount of data, Kinesis Data Firehose triggers your Lambda function to process the buffered data.
 
 - **Minimum value:** 1 MB
 - **Maximum value:** 3 MB
 
-## Buffer Interval
+### Buffer Interval
 
 The buffer interval parameter specifies the maximum amount of time, in seconds, that Kinesis Data Firehose buffers incoming data before invoking your Lambda function. If the buffer size is not reached within this interval, Kinesis Data Firehose triggers your Lambda function based on the time interval.
 
 - **Minimum value:** 60 seconds (1 minute)
 - **Maximum value:** 900 seconds (15 minutes)
 
-## How They Work Together
+### How They Work Together
 
 Kinesis Data Firehose will invoke your Lambda function to process buffered data when either the buffer size or the buffer interval condition is met, whichever comes first. This ensures that your data is processed in a timely manner without being delayed indefinitely.
 
-### Example Configuration
+#### Example Configuration
 
 If you set:
 - **Buffer Size:** 3 MB
 - **Buffer Interval:** 300 seconds (5 minutes)
 
 Kinesis Data Firehose will invoke your Lambda function as soon as 3 MB of data is buffered or 5 minutes have passed since the last invocation, whichever happens first.
-![image](https://github.com/user-attachments/assets/d419e9d8-f4e5-46a3-be58-a3d1ebf537d3)
 
-4. Finally add S3 bucket for writing the transfomerd data from firehose and choose to store data in hive like partition style by enabling Dynamic partitioning.
-   ![image](https://github.com/user-attachments/assets/0684acc7-8852-4d58-b051-e2426ec161ec)
+![Buffer Configuration](https://github.com/user-attachments/assets/d419e9d8-f4e5-46a3-be58-a3d1ebf537d3)
+
+# 4. Add S3 Bucket for Data Storage
+
+Finally, configure the S3 bucket where the transformed data from Kinesis Firehose will be stored. Enable Dynamic Partitioning to store data in a Hive-like partitioned structure.
+
+![S3 Setup](https://github.com/user-attachments/assets/0684acc7-8852-4d58-b051-e2426ec161ec)
 
 
 
