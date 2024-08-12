@@ -111,8 +111,18 @@ This project demonstrates the implementation of a real-time data pipeline using 
 - [Step 5: Create an EventBridge Pipe](#step-5-create-an-eventbridge-pipe)
 - [Step 6: IAM Role Configuration](#step-6-iam-role-configuration)
 - [Step 7: Kinesis Firehose Setup](#step-7-kinesis-firehose-setup)
-- [Step 8: Trigger the Mock Data Generator from Google Colab to Test Functionality](#step-8-Trigger the Mock Data Generator from Google Colab to Test Functionality)
+  - [Create a Kinesis Firehose Delivery Stream](#create-a-kinesis-firehose-delivery-stream)
+  - [Add a Transformation Lambda Function](#add-a-transformation-lambda-function)
+  - [Configure Buffer Size and Buffer Interval](#configure-buffer-size-and-buffer-interval)
+  - [Add S3 Bucket for Data Storage](#add-s3-bucket-for-data-storage)
+- [Step 8: Trigger the Mock Data Generator from Google Colab to Test Functionality](#step-8-trigger-the-mock-data-generator-from-google-colab-to-test-functionality)
 - [Step 9: Setup Athena for Querying S3 Data](#step-9-setup-athena-for-querying-s3-data)
+  - [Create Glue Data Catalog](#create-glue-data-catalog)
+  - [Setup Custom Classifier](#setup-custom-classifier)
+  - [Trigger the Crawler](#trigger-the-crawler)
+- [Step 10: Invoke CDC Manually from DynamoDB Table and Test the Pipeline](#step-10-invoke-cdc-manually-from-dynamodb-table-and-test-the-pipeline)
+- [Notes](#notes)
+- [Conclusion](#conclusion)
 
 ## Prerequisites
 
