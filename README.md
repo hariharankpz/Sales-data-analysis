@@ -133,14 +133,19 @@ This step involves creating a mock data generator that will create schema and in
 ## Step 4: Create a Kinesis Data Stream
 
 - Create a Kinesis Data Stream with default settings.
-  ![image](https://github.com/user-attachments/assets/e054deed-fcfb-4a70-a48c-ef5723f5f937)
+  ![image](https://github.com/user-attachments/assets/f10a4877-b341-4b61-b8d4-0a3236671d4c)
 
 
 ## Step 5: Create an EventBridge Pipe
 
 1. Create an EventBridge Pipe that reads data from DynamoDB Streams and sends it to Kinesis.
 2. Add `OrdersRawTable` as the source and the Kinesis Data Stream as the target.
-3. Define the partition key in Kinesis using the `orderid` from the DynamoDB data.
+3. Define the partition key in Kinesis using the `orderid` from the DynamoDB data. Partition key: $.dynamodb.Keys.orderid.S
+  ![image](https://github.com/user-attachments/assets/75941f3e-bcf0-419c-992f-7e18d3fe7a8a)
+  ![image](https://github.com/user-attachments/assets/7b50b8f8-e974-4b1c-a9a0-f617dcf17c24)
+
+
+
 
 ## Step 6: IAM Role Configuration
 
