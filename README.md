@@ -213,9 +213,24 @@ Finally, configure the S3 bucket where the transformed data from Kinesis Firehos
 ![S3 Setup](https://github.com/user-attachments/assets/0684acc7-8852-4d58-b051-e2426ec161ec)
 
 
+# Step 8: Now trigger the mock data generator from google collab and test the entire pipeline functinality.
+   ![DynamoDB Records](https://github.com/user-attachments/assets/c0081bf6-2443-4a2c-bb63-e2df085d4f9e)
+   ![DynamoDB Records Inserted](https://github.com/user-attachments/assets/27182a8a-f804-4b85-9a3c-1f64f7e0a641)
+   
+   Now records got inserted in DynamoDB:
+   
+   ![DynamoDB Records Inserted](https://github.com/user-attachments/assets/ca64b6f2-86ae-463c-9882-b45f06a17392)
+   
+   Whenever there is a CDC happening in DynamoDB (insert here), this CDC will get captured in DynamoDB Streams, and the EventBridge pipe will trigger and pass the records to Kinesis Streams.
+   
+   Data landed in Kinesis Shard 0:
+   
+   ![Kinesis Shard 0](https://github.com/user-attachments/assets/865c6abc-ccbc-43f1-a6a3-e6c5ac01361e)
+   
+   Now Kinesis Firehose comes into play:
+   - The role of Kinesis Firehose is to batch the data landing in your Kinesis Stream and then dump it into the target. Here we use S3 as the target. Firehose will wait for 1MB of data to arrive or 60 seconds from the previous run and       then execute, thereby achieving batch processing.
 
-
-# Step 8: Setup Athena for Querying S3 Data
+# Step 9: Setup Athena for Querying S3 Data
 
 In AWS Athena, data stored in S3 needs to be cataloged and crawled to allow Athena to query it effectively. Here's why:
 Athena queries data by referring to table definitions stored in the Glue Data Catalog. Without a catalog, Athena wouldn’t know the structure of your data, making querying impossible and the crawler helps to automate the process of creating table definitions in the Data Catalog. Instead of manually defining the schema, the crawler identifies and creates this metadata, ensuring that Athena has the necessary information to run SQL queries on the data.
@@ -231,6 +246,19 @@ Athena queries data by referring to table definitions stored in the Glue Data Ca
 
    
 5. Use Athena to query the data and gain insights.
+   ![image](https://github.com/user-attachments/assets/19319806-b63b-44a3-83ac-cc16bf338fb1)
+
+
+   
+
+
+
+   
+   
+
+
+
+
 
 ## Notes
 
