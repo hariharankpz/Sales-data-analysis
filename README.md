@@ -12,14 +12,15 @@ This project aims to develop a real-time sales data analysis system to monitor a
 
 ## Tech Stack
 
-- **AWS Lambda**: Used for generating mock order data and transforming data in real-time.
-- **Amazon DynamoDB**: Serves as the primary data store for order data and captures Change Data Capture (CDC) events using DynamoDB Streams.
-- **Amazon Kinesis Stream**: Collects and processes streaming data in real-time.
-- **Amazon Kinesis Firehose**: Transforms and stores the streaming data in an S3 bucket.
+- **AWS Lambda**: Used for transforming data in real-time.
+- **Amazon DynamoDB**: Serves as the primary data store for order data.
+- **Amazon DynamoDB Streams**: Captures changes (inserts, updates, deletes) to the DynamoDB table, providing a continuous log of changes for downstream processing.
+- **Amazon Kinesis Stream**: Collects and processes the CDC events from DynamoDB Streams in real-time, enabling real-time analytics and processing.
+- **Amazon Kinesis Firehose**: Handles the delivery of the streaming data from Kinesis Stream to S3. It can batch, compress, and transform the data before storing it.
 - **Amazon S3**: Stores transformed data.
 - **AWS Glue Crawler**: Scans the S3 bucket to determine the structure and schema of the stored data and updates the Glue Catalog.
-- **AWS Glue Catalog**: Acts as a metadata repository that stores information about the structure and schema of the data in S3.
-- **Amazon Athena**: Used for running ad-hoc queries on the data stored in the S3 bucket.
+- **AWS Glue Catalog**: Stores metadata about the data structure and schema, allowing tools like Athena to understand and query the data stored in S3.
+- **Amazon Athena**: Enables you to run SQL queries directly (Ad-hoc queries) against the data stored in S3, using the metadata stored in the AWS Glue Catalog.
 
 ## Objective
 
@@ -76,9 +77,29 @@ Develop a real-time sales data analysis system to:
 
 ---
 
+#Important:
+### What Happens When You Update Two Rows and Insert One New Row in DynamoDB
+
+With DynamoDB Streams configured to capture the entire item as it appears after the change (using the `NEW_IMAGE` stream view type), the following will occur:
+
+- **Insert New Row:**
+  - A new entry will be added to DynamoDB Streams.
+  - The stream record will contain the entire item as it was inserted, including all its attributes.
+
+- **Update Rows:**
+  - For each update, a new entry will be added to DynamoDB Streams.
+  - The stream record will contain the entire item as it appears after the update, reflecting the changes made. If an attribute is modified, the stream record will show the new value. If an attribute is deleted, it won't appear in the `NEW_IMAGE`.
+
+Each operation (insert or update) creates a separate stream record. In this scenario, three records will be added to the stream:
+- One for the new row insertion.
+- Two for the updated rows.
+
+These records can then be processed by any consumers of the stream (e.g., Lambda, Kinesis) to handle the changes accordingly.
+
 # Real-Time Sales Data Analysis Project Implementation
 
 This project demonstrates the implementation of a real-time data pipeline using AWS services. The pipeline captures changes in a DynamoDB table and streams them into a Kinesis Data Stream for further processing.
+
 
 ## Table of Contents
 
